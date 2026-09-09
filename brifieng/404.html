@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · Página no encontrada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page{display:flex;align-items:center;justify-content:center;}
+  .err-wrap{max-width:460px;text-align:center;position:relative;}
+  .err-wrap .blob{width:220px;height:220px;top:-30px;left:calc(50% - 110px);z-index:0;opacity:.7;}
+  .err-code{position:relative;z-index:1;font-family:var(--font-head);font-weight:700;font-size:96px;line-height:1;margin-bottom:6px;}
+  .err-title{position:relative;z-index:1;font-size:22px;font-weight:600;margin-bottom:10px;}
+  .err-sub{position:relative;z-index:1;color:var(--muted);font-size:14px;line-height:1.6;margin-bottom:30px;max-width:36ch;
+           margin-left:auto;margin-right:auto;}
+  .err-actions{position:relative;z-index:1;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  .logo{justify-content:center;margin-bottom:40px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="err-wrap">
+    <div class="blob"></div>
+    <p class="logo"><span class="dot"></span></p>
+    <p class="err-code">404</p>
+    <p class="err-title">Esta página se escapó como una cuota sin avisar</p>
+    <p class="err-sub">No encontramos lo que buscabas. Puede que el enlace esté roto o que la página se haya movido.</p>
+    <div class="err-actions">
+      <a href="tarjetas.html"><button type="button" class="pill">Ir al panel</button></a>
+      <a href="landing.html"><button type="button" class="pill ghost">Volver al inicio</button></a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

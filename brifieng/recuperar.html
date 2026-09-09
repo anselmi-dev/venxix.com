@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recuperar contraseña · Cuotas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page{display:flex;align-items:center;justify-content:center;}
+  .icon-circle{width:44px;height:44px;border-radius:12px;background:var(--surface2);border:1.5px solid var(--border);
+              display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:18px;}
+  h1{font-size:25px;margin:0 0 8px;}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 26px;line-height:1.5;max-width:36ch;}
+  .foot-link{text-align:center;font-size:13px;color:var(--muted);margin-top:24px;}
+  .link{color:var(--bg-deep);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell narrow">
+    <a class="back-link" href="login.html">← Volver a iniciar sesión</a>
+
+    <div class="icon-circle">✉</div>
+    <p class="eyebrow">Recuperar acceso</p>
+    <h1>¿Olvidaste tu contraseña?</h1>
+    <p class="sub">Ingresá el correo de tu cuenta y te enviamos un enlace para elegir una nueva contraseña.</p>
+
+    <form>
+      <div class="field">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" placeholder="tu@correo.com">
+      </div>
+      <a href="confirmacion-envio.html"><button type="button" class="pill block">Enviar instrucciones</button></a>
+    </form>
+
+    <p class="foot-link">¿Recordaste tu contraseña? <a class="link" href="login.html">Iniciar sesión</a></p>
+  </div>
+</div>
+</body>
+</html>

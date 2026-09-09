@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mis tarjetas · Cuotas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .sub{color:var(--muted);font-size:14px;margin:0 0 28px;max-width:52ch;line-height:1.5;}
+  .stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:36px;}
+  @media (max-width:560px){ .stats3{grid-template-columns:1fr;} }
+
+  .sect-head{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 14px;}
+  .sect-head h2{font-size:19px;font-weight:600;}
+  .sect-head span{font-size:12px;color:var(--muted);}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-bottom:40px;}
+  .card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:18px;
+        display:flex;flex-direction:column;gap:14px;cursor:pointer;transition:box-shadow .15s ease, transform .15s ease;}
+  .card:hover{box-shadow:var(--shadow-sm);transform:translateY(-2px);}
+  .card .top{display:flex;justify-content:space-between;align-items:flex-start;}
+  .card .bank{display:flex;align-items:center;gap:10px;}
+  .avatar{width:34px;height:34px;font-size:14px;}
+  .bank .id{font-size:12px;color:var(--muted);}
+  .bank .name{font-size:14px;font-weight:600;}
+  .arrow{color:var(--muted);font-size:16px;}
+
+  .balances .b1{font-family:var(--font-head);font-size:20px;font-weight:700;}
+  .balances .b2{font-size:13px;color:var(--muted);}
+
+  .spark{display:flex;align-items:flex-end;gap:3px;height:26px;}
+  .spark i{flex:1;background:var(--border);border-radius:2px;display:block;}
+  .spark i.on{background:var(--bg-deep);}
+
+  .card .foot{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);
+              border-top:1px solid var(--border);padding-top:12px;}
+
+  .card.example{opacity:.55;}
+  .card.example .avatar{color:var(--muted);}
+
+  .add-tile{border:1.5px dashed var(--border);border-radius:var(--radius-md);display:flex;flex-direction:column;
+            align-items:center;justify-content:center;gap:8px;min-height:168px;color:var(--muted);cursor:pointer;
+            transition:border-color .15s ease, color .15s ease;}
+  .add-tile:hover{border-color:var(--bg-deep);color:var(--ink);}
+  .add-tile .plus{width:34px;height:34px;border-radius:50%;border:1.5px solid currentColor;display:flex;
+                  align-items:center;justify-content:center;font-size:18px;line-height:1;}
+  .add-tile span{font-size:13px;}
+
+  .split{display:grid;grid-template-columns:1fr 1.1fr;gap:16px;margin-bottom:24px;}
+  @media (max-width:680px){ .split{grid-template-columns:1fr;} }
+
+  .cal{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;}
+  .cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+  .cal-head h3{font-size:19px;font-weight:700;}
+  .cal-head h3 .yr{color:var(--muted);font-weight:500;}
+  .cal-nav{display:flex;gap:6px;align-items:center;}
+  .cal-nav button{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:#fff;
+                  color:var(--muted);cursor:pointer;font-size:13px;}
+  .cal-nav .month-pill{border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 12px;
+                       font-size:12px;font-weight:600;color:var(--ink);margin-right:4px;}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;}
+  .cal-grid .dow{font-size:10px;color:var(--muted);padding-bottom:8px;font-weight:700;text-transform:uppercase;}
+  .cal-day{position:relative;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+           gap:3px;font-size:13px;border-radius:12px;color:var(--ink);background:#fff;border:1px solid var(--border);
+           cursor:pointer;}
+  .cal-day:hover{border-color:var(--bg-deep);}
+  .cal-day.muted{color:var(--border);border-color:transparent;background:transparent;cursor:default;pointer-events:none;}
+  .cal-day.today{border-color:var(--bg-deep);border-width:1.5px;font-weight:700;}
+  .cal-day .dot{width:4px;height:4px;border-radius:50%;background:var(--bg-deep);}
+  .cal-day.selected{background:var(--ink);border-color:var(--ink);color:#fff;}
+  .cal-day.selected .dot{background:#fff;}
+
+  .events-panel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;
+               display:flex;flex-direction:column;}
+  .ep-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:10px;}
+  .ep-head h3{font-size:19px;font-weight:700;}
+  .ep-head .actions{display:flex;gap:8px;align-items:center;}
+  .ep-head select{border:1px solid var(--border);background:#fff;border-radius:999px;padding:7px 12px;font-size:12px;
+                  font-family:var(--font-body);color:var(--ink);}
+  .ep-filter-note{font-size:12px;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .ep-filter-note button{border:none;background:none;color:var(--bg-deep);font-weight:600;font-size:12px;cursor:pointer;
+                         font-family:var(--font-body);padding:0;}
+  .ep-list{display:flex;flex-direction:column;gap:10px;max-height:330px;overflow-y:auto;}
+  .ev-row{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--border);
+         border-radius:var(--radius-md);padding:12px 14px;}
+  .ev-date{width:42px;flex-shrink:0;text-align:center;}
+  .ev-date .num{font-family:var(--font-head);font-size:20px;font-weight:700;line-height:1;}
+  .ev-date .dow{font-size:10px;color:var(--muted);text-transform:uppercase;margin-top:3px;}
+  .ev-body{flex:1;min-width:0;}
+  .ev-status{font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:6px;}
+  .ev-status.pendiente{background:#e6ecff;color:var(--blue);}
+  .ev-status.pronto{background:var(--surface2);color:var(--bg-deep);border:1px solid #f0d98a;}
+  .ev-status.pagada{background:#e7f5ee;color:var(--green);}
+  .ev-title{font-size:13.5px;font-weight:600;}
+  .ev-meta{display:flex;gap:12px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:5px;}
+  .ep-empty{text-align:center;color:var(--muted);font-size:13px;padding:36px 10px;}
+
+  .notes{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px;
+        display:flex;flex-direction:column;gap:10px;margin-bottom:40px;}
+  .notes h3{font-size:16px;font-weight:600;margin:0 0 4px;}
+  .note-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;
+             font-size:13px;line-height:1.5;border-left:3px solid var(--border);}
+  .note-item.flag{border-left-color:var(--red);}
+  .note-add{border:1.5px dashed var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;
+            color:var(--muted);cursor:pointer;text-align:center;}
+  .note-add:hover{border-color:var(--bg-deep);color:var(--ink);}
+
+  .disclaimer{background:var(--surface2);border-left:3px solid var(--red);border-radius:var(--radius-sm);
+              padding:14px 18px;font-size:13px;color:var(--muted);line-height:1.5;}
+  .disclaimer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell">
+
+    <nav class="topnav">
+      <div class="logo"><span class="dot"></span>Cuotas</div>
+      <div class="nav-links">
+        <a href="tarjetas.html" class="active">Panel</a>
+        <a href="cuotas.html">Resumen</a>
+        <a href="perfil.html">Perfil</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="notif-bell">
+          <button type="button" id="notifBtn">🔔<span class="bell-dot"></span></button>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="nd-head"><h4>Notificaciones</h4><a href="#">Marcar todas como leídas</a></div>
+            <div class="nd-list">
+              <div class="notif-item unread">
+                <span class="ni-icon">📅</span>
+                <div class="ni-body">
+                  <p class="ni-title">Vence en 2 días</p>
+                  <p class="ni-desc">Fotostanisic — cuota 5/10, $ 3.936</p>
+                  <p class="ni-time">Hace 3 horas</p>
+                </div>
+                <span class="ni-unread-dot"></span>
+              </div>
+              <div class="notif-item unread">
+                <span class="ni-icon">💳</span>
+                <div class="ni-body">
+                  <p class="ni-title">Vence mañana</p>
+                  <p class="ni-desc">Xiaomi Uruguay — cuota 11/12, U$ 55,75</p>
+                  <p class="ni-time">Ayer</p>
+                </div>
+                <span class="ni-unread-dot"></span>
+              </div>
+              <div class="notif-item">
+                <span class="ni-icon">✅</span>
+                <div class="ni-body">
+                  <p class="ni-title">Tu suscripción se renovó</p>
+                  <p class="ni-desc">Plan Pro — $ 199</p>
+                  <p class="ni-time">5 sep</p>
+                </div>
+              </div>
+            </div>
+            <div class="nd-foot"><a href="notificaciones.html">Ver todas las notificaciones →</a></div>
+          </div>
+        </div>
+        <a href="perfil.html"><div class="avatar" style="width:36px;height:36px;">B</div></a>
+      </div>
+    </nav>
+
+    <p class="eyebrow">Panel</p>
+    <h1 style="font-size:30px;margin-bottom:6px;">Mis tarjetas y cuentas</h1>
+    <p class="sub">Un lugar para ver todo lo que tenés en cuotas, sin entrar tarjeta por tarjeta. Tocá cualquiera para ver su resumen detallado.</p>
+
+    <div class="stats3">
+      <div class="stat"><p class="lbl">Pendiente total UYU</p><p class="val">$ 30.093</p><p class="sub2">3 tarjetas</p></div>
+      <div class="stat"><p class="lbl">Pendiente total USD</p><p class="val">U$ 112</p><p class="sub2">+ U$ 30/mes en suscripciones</p></div>
+      <div class="stat"><p class="lbl">Próximo vencimiento</p><p class="val">10 sep</p><p class="sub2">Fotostanisic · $ 3.936</p></div>
+    </div>
+
+    <div class="sect-head">
+      <h2>Tarjetas</h2>
+      <span>3 activas</span>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" href="cuotas.html">
+        <div class="top">
+          <div class="bank">
+            <div class="avatar">B</div>
+            <div>
+              <p class="name">Tarjeta ····1796</p>
+              <p class="id">Visa · Débito</p>
+            </div>
+          </div>
+          <span class="arrow">→</span>
+        </div>
+        <div class="balances">
+          <p class="b1">$ 30.093</p>
+          <p class="b2">U$ 112 · 6 cuotas activas</p>
+        </div>
+        <div class="spark">
+          <i class="on" style="height:60%"></i>
+          <i class="on" style="height:68%"></i>
+          <i style="height:35%"></i>
+          <i style="height:35%"></i>
+          <i style="height:35%"></i>
+          <i style="height:35%"></i>
+        </div>
+        <div class="foot">
+          <span>Sep → Feb 2027</span>
+          <span>Ver resumen</span>
+        </div>
+      </a>
+
+      <a class="card example" href="#">
+        <div class="top">
+          <div class="bank">
+            <div class="avatar">S</div>
+            <div>
+              <p class="name">Tarjeta ····4820</p>
+              <p class="id">Mastercard · Crédito</p>
+            </div>
+          </div>
+          <span class="tag">Ejemplo</span>
+        </div>
+        <div class="balances">
+          <p class="b1">$ 0</p>
+          <p class="b2">U$ 0 · sin cuotas</p>
+        </div>
+        <div class="spark">
+          <i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i>
+          <i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i>
+        </div>
+        <div class="foot">
+          <span>—</span>
+          <span>Sin datos</span>
+        </div>
+      </a>
+
+      <a class="card example" href="#">
+        <div class="top">
+          <div class="bank">
+            <div class="avatar">I</div>
+            <div>
+              <p class="name">Cuenta ····0193</p>
+              <p class="id">Itaú · Cuenta</p>
+            </div>
+          </div>
+          <span class="tag">Ejemplo</span>
+        </div>
+        <div class="balances">
+          <p class="b1">$ 0</p>
+          <p class="b2">U$ 0 · sin cuotas</p>
+        </div>
+        <div class="spark">
+          <i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i>
+          <i style="height:20%"></i><i style="height:20%"></i><i style="height:20%"></i>
+        </div>
+        <div class="foot">
+          <span>—</span>
+          <span>Sin datos</span>
+        </div>
+      </a>
+
+      <div class="add-tile">
+        <div class="plus">+</div>
+        <span>Agregar tarjeta o cuenta</span>
+      </div>
+
+    </div>
+
+    <div class="split">
+
+      <div class="cal">
+        <div class="cal-head">
+          <h3><span id="calTitle">Septiembre</span> <span class="yr" id="calYear">2026</span></h3>
+          <div class="cal-nav">
+            <span class="month-pill">Mes ▾</span>
+            <button id="calPrev">‹</button>
+            <button id="calNext">›</button>
+          </div>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+
+      <div class="events-panel">
+        <div class="ep-head">
+          <h3>Tus vencimientos</h3>
+          <div class="actions">
+            <select><option>Todas</option><option>Pendientes</option><option>Pagadas</option></select>
+            <button type="button" class="pill sm">+ Agregar</button>
+          </div>
+        </div>
+        <div class="ep-filter-note" id="epFilterNote" style="display:none;">
+          Mostrando solo el día seleccionado. <button id="epReset">Ver todas →</button>
+        </div>
+        <div class="ep-list" id="epList"></div>
+      </div>
+
+    </div>
+
+    <div class="notes">
+      <h3>Notas</h3>
+      <div class="note-item flag">Confirmar si Zooko ya terminó sus 6 cuotas — la última no aparece en el estado de cuenta.</div>
+      <div class="note-item">Fotostanisic es la cuota más larga: sigue hasta febrero 2027.</div>
+      <div class="note-item">Evaluar si sigo pagando Lemsqzy Laragon (U$ 10/mes) o la doy de baja.</div>
+      <div class="note-add">+ Agregar nota</div>
+    </div>
+
+
+    <div class="disclaimer">
+      <strong>Sobre esta vista.</strong> Es solo maquetación: los datos de la tarjeta ····1796 son reales, las otras dos son ejemplos para mostrar el listado con varias cuentas, y el botón "Agregar tarjeta", el calendario y las notas todavía no tienen funcionalidad — quedan listos para conectar la lógica.
+    </div>
+
+  </div>
+</div>
+
+<script>
+const monthNames = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const dowShort = ["dom","lun","mar","mié","jue","vie","sáb"];
+let calYear = 2026, calMonth = 8;
+const today = { y:2026, m:8, d:5 };
+let selectedDay = null;
+
+// Vencimientos por mes (calMonth: 8 = Septiembre). Cada uno referencia una cuota real del resumen.
+const eventsByMonth = {
+  "2026-8": [
+    { d:3,  title:"Wikimusculos Tres Cr", meta:"Cuota 1/2 · ····1796", amount:"$ 1.660,50", status:"pagada",    label:"Pagada" },
+    { d:10, title:"Merpago*Fotostanisic", meta:"Cuota 5/10 · ····1796", amount:"$ 3.936,00", status:"pronto",   label:"Vence pronto" },
+    { d:13, title:"Xiaomi Uruguay",       meta:"Cuota 11/12 · ····1796", amount:"U$ 55,75",   status:"pendiente",label:"Pendiente" },
+    { d:25, title:"Merpago*Agfotografia", meta:"Cuota 4/5 · ····1796",  amount:"$ 1.100,00",  status:"pendiente",label:"Pendiente" },
+    { d:29, title:"Decathlon Pta Carret", meta:"Cuota 2/3 · ····1796",  amount:"$ 928,33",    status:"pendiente",label:"Pendiente" },
+    { d:30, title:"San Roque",            meta:"Cuota 2/2 (final) · ····1796", amount:"$ 759,50", status:"pendiente",label:"Pendiente" },
+  ],
+  "2026-9": [
+    { d:10, title:"Merpago*Fotostanisic", meta:"Cuota 6/10 · ····1796", amount:"$ 3.936,00", status:"pendiente", label:"Pendiente" },
+  ],
+};
+
+function renderCal(){
+  document.getElementById('calTitle').textContent = monthNames[calMonth];
+  document.getElementById('calYear').textContent = calYear;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  ["L","M","X","J","V","S","D"].forEach(d=>{
+    const el = document.createElement('div');
+    el.className = 'dow';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+
+  const first = new Date(calYear, calMonth, 1);
+  let startOffset = first.getDay() - 1;
+  if(startOffset < 0) startOffset = 6;
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const key = calYear + "-" + calMonth;
+  const marks = eventsByMonth[key] || [];
+
+  for(let i=0;i<startOffset;i++){
+    const el = document.createElement('div');
+    el.className = 'cal-day muted';
+    grid.appendChild(el);
+  }
+  for(let d=1; d<=daysInMonth; d++){
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    const hasEvent = marks.some(m=>m.d===d);
+    if(calYear===today.y && calMonth===today.m && d===today.d) el.className += ' today';
+    if(selectedDay===d) el.className += ' selected';
+    el.innerHTML = '<span>'+d+'</span>' + (hasEvent ? '<span class="dot"></span>' : '');
+    if(hasEvent){
+      el.addEventListener('click', ()=>{
+        selectedDay = (selectedDay===d) ? null : d;
+        renderCal();
+        renderEvents();
+      });
+    }
+    grid.appendChild(el);
+  }
+}
+
+function renderEvents(){
+  const key = calYear + "-" + calMonth;
+  const all = (eventsByMonth[key] || []).slice().sort((a,b)=>a.d-b.d);
+  const list = selectedDay ? all.filter(e=>e.d===selectedDay) : all;
+
+  document.getElementById('epFilterNote').style.display = selectedDay ? 'flex' : 'none';
+
+  const box = document.getElementById('epList');
+  box.innerHTML = '';
+
+  if(list.length === 0){
+    box.innerHTML = '<p class="ep-empty">Sin vencimientos este día.</p>';
+    return;
+  }
+
+  list.forEach(ev=>{
+    const dow = dowShort[new Date(calYear, calMonth, ev.d).getDay()];
+    const row = document.createElement('div');
+    row.className = 'ev-row';
+    row.innerHTML =
+      '<div class="ev-date"><p class="num">'+ev.d+'</p><p class="dow">'+dow+'</p></div>' +
+      '<div class="ev-body">' +
+        '<span class="ev-status '+ev.status+'">'+ev.label+'</span>' +
+        '<p class="ev-title">'+ev.title+'</p>' +
+        '<div class="ev-meta"><span>'+ev.meta+'</span><span>'+ev.amount+'</span></div>' +
+      '</div>';
+    box.appendChild(row);
+  });
+}
+
+document.getElementById('calPrev').addEventListener('click', ()=>{
+  calMonth--; if(calMonth<0){calMonth=11; calYear--;}
+  selectedDay = null;
+  renderCal(); renderEvents();
+});
+document.getElementById('calNext').addEventListener('click', ()=>{
+  calMonth++; if(calMonth>11){calMonth=0; calYear++;}
+  selectedDay = null;
+  renderCal(); renderEvents();
+});
+document.getElementById('epReset').addEventListener('click', ()=>{
+  selectedDay = null;
+  renderCal(); renderEvents();
+});
+
+renderCal();
+renderEvents();
+
+document.getElementById('notifBtn').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  document.getElementById('notifDropdown').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const dd = document.getElementById('notifDropdown');
+  if(dd.classList.contains('open') && !dd.contains(e.target)) dd.classList.remove('open');
+});
+</script>
+</body>
+</html>

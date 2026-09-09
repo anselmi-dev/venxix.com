@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bienvenido · Cuotas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page{display:flex;align-items:center;justify-content:center;}
+  .shell.narrow{text-align:center;display:flex;flex-direction:column;align-items:center;}
+  .steps{display:flex;gap:6px;margin-bottom:26px;}
+  .steps i{width:26px;height:4px;border-radius:4px;background:var(--border);display:block;}
+  .steps i.on{background:var(--bg-deep);}
+  .illu{position:relative;width:180px;height:140px;margin-bottom:26px;display:flex;align-items:center;justify-content:center;}
+  .illu .blob{width:150px;height:150px;top:-5px;left:15px;z-index:0;}
+  .mock{position:relative;z-index:1;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:12px;
+       box-shadow:6px 6px 0 rgba(22,22,22,.12);width:160px;}
+  .mock .bar{display:flex;gap:4px;margin-bottom:8px;}
+  .mock .bar i{width:6px;height:6px;border-radius:50%;border:1.5px solid var(--ink);}
+  .mock .row{display:flex;justify-content:space-between;padding:6px 0;border-top:1px dashed var(--border);font-size:10px;}
+  .mock .row:first-of-type{border-top:none;}
+  h1{font-size:25px;margin:0 0 10px;}
+  .sub{color:var(--muted);font-size:14px;line-height:1.6;max-width:34ch;margin-bottom:30px;}
+  .foot-link{font-size:13px;color:var(--muted);margin-top:18px;}
+  .link{color:var(--bg-deep);font-weight:600;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell narrow">
+    <div class="steps"><i class="on"></i><i></i><i></i></div>
+
+    <div class="illu">
+      <div class="blob"></div>
+      <div class="mock">
+        <div class="bar"><i></i><i></i><i></i></div>
+        <div class="row"><span>Fotostanisic</span><span>$ 3.936</span></div>
+        <div class="row"><span>Wikimusculos</span><span>$ 1.660</span></div>
+        <div class="row"><span>San Roque</span><span>$ 759</span></div>
+      </div>
+    </div>
+
+    <p class="eyebrow">¡Bienvenido!</p>
+    <h1>Vamos a armar tu panel, Bruno</h1>
+    <p class="sub">Son solo dos pasos: agregás tu primera tarjeta y elegís cómo querés ver los montos. Menos de un minuto.</p>
+
+    <a href="onboarding-2.html"><button type="button" class="pill block">Empezar</button></a>
+    <p class="foot-link"><a class="link" href="tarjetas.html">Saltear por ahora →</a></p>
+  </div>
+</div>
+</body>
+</html>

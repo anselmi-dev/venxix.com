@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de privacidad · Cuotas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .legal-layout{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:start;}
+  @media (max-width:720px){ .legal-layout{grid-template-columns:1fr;} .toc{display:none;} }
+  .toc{position:sticky;top:28px;display:flex;flex-direction:column;gap:4px;}
+  .toc a{font-size:13px;color:var(--muted);padding:7px 10px;border-radius:8px;}
+  .toc a:hover{background:var(--surface2);color:var(--ink);}
+  .updated{font-size:12px;color:var(--muted);margin-bottom:30px;}
+  article h2{font-size:17px;font-weight:600;margin:30px 0 10px;scroll-margin-top:24px;}
+  article h2:first-child{margin-top:0;}
+  article p{font-size:14px;line-height:1.7;color:#3a3a3a;margin-bottom:12px;max-width:70ch;}
+  article ul{margin:0 0 12px;padding-left:20px;}
+  article li{font-size:14px;line-height:1.7;color:#3a3a3a;margin-bottom:6px;max-width:66ch;}
+  .table-wrap{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:16px;}
+  .t-row{display:flex;padding:11px 14px;font-size:13px;border-top:1px solid var(--border);}
+  .t-row:first-child{border-top:none;background:var(--surface2);font-weight:600;}
+  .t-row span:first-child{width:38%;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell">
+
+    <nav class="topnav">
+      <div class="logo"><span class="dot"></span>Cuotas</div>
+      <div class="nav-links">
+        <a href="terminos.html">Términos</a>
+        <a href="privacidad.html" class="active">Privacidad</a>
+      </div>
+      <a href="landing.html"><button class="pill ghost sm">Volver al inicio</button></a>
+    </nav>
+
+    <p class="eyebrow">Legal</p>
+    <h1 style="font-size:30px;margin-bottom:8px;">Política de privacidad</h1>
+    <p class="updated">Última actualización: 1 de septiembre de 2026</p>
+
+    <div class="legal-layout">
+      <nav class="toc">
+        <a href="#recopilamos">1. Qué datos recopilamos</a>
+        <a href="#uso">2. Para qué los usamos</a>
+        <a href="#compartimos">3. Con quién los compartimos</a>
+        <a href="#seguridad">4. Seguridad</a>
+        <a href="#derechos">5. Tus derechos</a>
+        <a href="#cookies">6. Cookies</a>
+        <a href="#contacto">7. Contacto</a>
+      </nav>
+
+      <article>
+        <h2 id="recopilamos">1. Qué datos recopilamos</h2>
+        <p>Para que Cuotas funcione, guardamos la información que vos cargás y algunos datos técnicos básicos:</p>
+        <div class="table-wrap">
+          <div class="t-row"><span>Categoría</span><span>Ejemplos</span></div>
+          <div class="t-row"><span>Cuenta</span><span>Nombre, email, contraseña (encriptada)</span></div>
+          <div class="t-row"><span>Tarjetas y cuotas</span><span>Nombre del comercio, montos, fechas, últimos 4 dígitos</span></div>
+          <div class="t-row"><span>Pagos</span><span>Estado de la suscripción, procesado por nuestro proveedor de pagos</span></div>
+          <div class="t-row"><span>Uso</span><span>Dispositivo, idioma, páginas visitadas dentro de la app</span></div>
+        </div>
+
+        <h2 id="uso">2. Para qué los usamos</h2>
+        <ul>
+          <li>Mostrarte tus tarjetas, cuotas y proyecciones de pago.</li>
+          <li>Enviarte recordatorios de vencimientos, si los activaste.</li>
+          <li>Procesar tu suscripción y mantener tu plan al día.</li>
+          <li>Mejorar la app en base a cómo se usa, de forma agregada.</li>
+        </ul>
+
+        <h2 id="compartimos">3. Con quién los compartimos</h2>
+        <p>No vendemos tus datos. Los compartimos únicamente con proveedores necesarios para operar el servicio (procesador de pagos, hosting, envío de emails), bajo acuerdos de confidencialidad.</p>
+
+        <h2 id="seguridad">4. Seguridad</h2>
+        <p>Tu contraseña se guarda encriptada. Nunca almacenamos el número completo de tu tarjeta de crédito ni el código de seguridad — eso queda a cargo del procesador de pagos.</p>
+
+        <h2 id="derechos">5. Tus derechos</h2>
+        <p>Podés pedirnos en cualquier momento acceder, corregir o eliminar tus datos personales, y también exportar la información que cargaste. Escribinos y lo resolvemos en un plazo razonable.</p>
+
+        <h2 id="cookies">6. Cookies</h2>
+        <p>Usamos cookies esenciales para mantener tu sesión iniciada, y cookies analíticas opcionales para entender cómo se usa la app. Podés desactivar las segundas desde la configuración de tu navegador.</p>
+
+        <h2 id="contacto">7. Contacto</h2>
+        <p>Para cualquier consulta sobre privacidad, escribinos a privacidad@cuotas.app.</p>
+      </article>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi perfil · Cuotas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .profile-head{display:flex;align-items:center;gap:18px;margin-bottom:36px;}
+  .avatar-lg{width:64px;height:64px;border-radius:16px;font-size:24px;}
+  .profile-head h1{font-size:26px;margin:0 0 4px;}
+  .profile-head .email{font-size:13px;color:var(--muted);}
+
+  .layout{display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:start;}
+  @media (max-width:720px){ .layout{grid-template-columns:1fr;} .side{display:flex;gap:8px;position:static;flex-wrap:wrap;} }
+
+  .side{position:sticky;top:28px;display:flex;flex-direction:column;gap:4px;}
+  .side a{font-size:14px;color:var(--muted);padding:9px 12px;border-radius:8px;}
+  .side a.active,.side a:hover{background:var(--surface2);color:var(--ink);font-weight:600;}
+  .side .logout{margin-top:14px;color:var(--red);}
+
+  .sections{display:flex;flex-direction:column;gap:16px;}
+  .section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:26px;scroll-margin-top:24px;}
+  .section h2{font-size:18px;font-weight:600;margin:0 0 4px;}
+  .section .desc{font-size:13px;color:var(--muted);margin:0 0 22px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:520px){ .grid2{grid-template-columns:1fr;} }
+
+  .avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:22px;}
+  .avatar-md{width:56px;height:56px;font-size:20px;}
+
+  .curr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+  @media (max-width:520px){ .curr-grid{grid-template-columns:1fr;} }
+  .curr-card{position:relative;}
+  .curr-card input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;}
+  .curr-card .box{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px;background:#fff;
+                  display:flex;flex-direction:column;gap:4px;}
+  .curr-card input:checked + .box{border-color:var(--bg-deep);background:#fef8e0;}
+  .curr-card .sym{font-family:var(--font-head);font-size:20px;font-weight:700;}
+  .curr-card .name{font-size:13px;}
+  .curr-card .code{font-size:11px;color:var(--muted);}
+
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--border);}
+  .toggle-row:first-of-type{border-top:none;}
+  .toggle-row .label{font-size:14px;font-weight:500;}
+  .toggle-row .desc2{font-size:12px;color:var(--muted);margin-top:2px;}
+
+  /* suscripción */
+  .plan-box{background:var(--ink);color:#fff;border-radius:var(--radius-md);padding:22px 24px;display:flex;
+           justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:14px;}
+  .plan-box .pb-name{font-family:var(--font-head);font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px;}
+  .plan-box .pb-tag{background:var(--bg);color:var(--ink);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;}
+  .plan-box .pb-desc{font-size:12px;color:#b9b9b9;margin-top:4px;}
+  .plan-box .pb-price{text-align:right;}
+  .plan-box .pb-price .amt{font-family:var(--font-head);font-size:20px;font-weight:700;}
+  .plan-box .pb-price .per{font-size:11px;color:#b9b9b9;}
+
+  .pay-method{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--border);
+             border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:22px;}
+  .pay-method .pm-left{display:flex;align-items:center;gap:12px;}
+  .pay-method .pm-card{width:40px;height:28px;border-radius:5px;background:var(--surface2);border:1px solid var(--border);
+                       display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--muted);}
+  .pay-method .pm-num{font-size:13px;font-weight:500;}
+  .pay-method .pm-exp{font-size:11px;color:var(--muted);}
+
+  .invoices{border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:22px;}
+  .inv-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:13px;
+          border-top:1px solid var(--border);background:#fff;}
+  .inv-row:first-child{border-top:none;}
+  .inv-row .inv-date{color:var(--muted);width:90px;}
+  .inv-row .inv-amt{font-family:var(--font-head);font-weight:600;width:70px;}
+  .inv-row .inv-status{font-size:11px;font-weight:600;color:var(--green);background:#e7f5ee;padding:2px 9px;border-radius:20px;}
+  .inv-row .inv-dl{color:var(--muted);font-size:12px;}
+
+  .actions-row{display:flex;gap:10px;flex-wrap:wrap;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;">
+      <a class="back-link" href="tarjetas.html" style="margin-bottom:0;">← Volver al panel</a>
+      <div class="notif-bell">
+        <button type="button" id="notifBtn">🔔<span class="bell-dot"></span></button>
+        <div class="notif-dropdown" id="notifDropdown">
+          <div class="nd-head"><h4>Notificaciones</h4><a href="#">Marcar todas como leídas</a></div>
+          <div class="nd-list">
+            <div class="notif-item unread">
+              <span class="ni-icon">📅</span>
+              <div class="ni-body">
+                <p class="ni-title">Vence en 2 días</p>
+                <p class="ni-desc">Fotostanisic — cuota 5/10, $ 3.936</p>
+                <p class="ni-time">Hace 3 horas</p>
+              </div>
+              <span class="ni-unread-dot"></span>
+            </div>
+            <div class="notif-item unread">
+              <span class="ni-icon">💳</span>
+              <div class="ni-body">
+                <p class="ni-title">Vence mañana</p>
+                <p class="ni-desc">Xiaomi Uruguay — cuota 11/12, U$ 55,75</p>
+                <p class="ni-time">Ayer</p>
+              </div>
+              <span class="ni-unread-dot"></span>
+            </div>
+            <div class="notif-item">
+              <span class="ni-icon">✅</span>
+              <div class="ni-body">
+                <p class="ni-title">Tu suscripción se renovó</p>
+                <p class="ni-desc">Plan Pro — $ 199</p>
+                <p class="ni-time">5 sep</p>
+              </div>
+            </div>
+          </div>
+          <div class="nd-foot"><a href="notificaciones.html">Ver todas las notificaciones →</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-head">
+      <div class="avatar avatar-lg">B</div>
+      <div>
+        <p class="eyebrow">Cuenta</p>
+        <h1>Bruno Rodríguez</h1>
+        <p class="email">bruno@correo.com</p>
+      </div>
+    </div>
+
+    <div class="layout">
+
+      <nav class="side">
+        <a href="#datos" class="active">Datos personales</a>
+        <a href="#password">Contraseña</a>
+        <a href="#moneda">Moneda</a>
+        <a href="#suscripcion">Suscripción</a>
+        <a href="login.html" class="logout">Cerrar sesión</a>
+      </nav>
+
+      <div class="sections">
+
+        <section class="section" id="datos">
+          <h2>Datos personales</h2>
+          <p class="desc">Tu nombre y foto son lo que vas a ver en el panel.</p>
+
+          <div class="avatar-row">
+            <div class="avatar avatar-md">B</div>
+            <div><button type="button" class="pill soft sm">Cambiar foto</button></div>
+          </div>
+
+          <div class="grid2">
+            <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" value="Bruno"></div>
+            <div class="field"><label for="apellido">Apellido</label><input type="text" id="apellido" value="Rodríguez"></div>
+          </div>
+          <div class="field"><label for="email2">Correo electrónico</label><input type="email" id="email2" value="bruno@correo.com"></div>
+          <div class="field"><label for="tel">Teléfono <span style="color:var(--muted);">(opcional)</span></label><input type="tel" id="tel" placeholder="+598 99 123 456"></div>
+
+          <button type="button" class="pill">Guardar cambios</button>
+        </section>
+
+        <section class="section" id="password">
+          <h2>Contraseña</h2>
+          <p class="desc">Usá una contraseña que no repitas en otros sitios.</p>
+
+          <div class="field"><label for="actual">Contraseña actual</label><input type="password" id="actual" placeholder="••••••••"></div>
+          <div class="grid2">
+            <div class="field"><label for="nueva">Nueva contraseña</label><input type="password" id="nueva" placeholder="••••••••"></div>
+            <div class="field"><label for="nueva2">Confirmar nueva contraseña</label><input type="password" id="nueva2" placeholder="••••••••"></div>
+          </div>
+          <p class="hint" style="margin:-8px 0 18px;">Mínimo 8 caracteres, con una mayúscula y un número.</p>
+
+          <button type="button" class="pill">Actualizar contraseña</button>
+        </section>
+
+        <section class="section" id="moneda">
+          <h2>Moneda</h2>
+          <p class="desc">Elegí en qué moneda querés ver tus montos por defecto.</p>
+
+          <div class="curr-grid">
+            <label class="curr-card">
+              <input type="radio" name="moneda" checked>
+              <div class="box"><span class="sym">$</span><span class="name">Peso uruguayo</span><span class="code">UYU</span></div>
+            </label>
+            <label class="curr-card">
+              <input type="radio" name="moneda">
+              <div class="box"><span class="sym">U$</span><span class="name">Dólar</span><span class="code">USD</span></div>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <div><p class="label">Mostrar ambas monedas</p><p class="desc2">Ver el monto en UYU y USD juntos en tarjetas y resúmenes.</p></div>
+            <label class="switch"><input type="checkbox" checked><span class="track"><span class="knob"></span></span></label>
+          </div>
+          <div class="toggle-row">
+            <div><p class="label">Redondear centavos</p><p class="desc2">Mostrar los importes sin decimales.</p></div>
+            <label class="switch"><input type="checkbox"><span class="track"><span class="knob"></span></span></label>
+          </div>
+
+          <div class="divider"></div>
+          <button type="button" class="pill">Guardar preferencias</button>
+        </section>
+
+        <section class="section" id="suscripcion">
+          <h2>Suscripción</h2>
+          <p class="desc">Gestioná tu plan, método de pago y facturas.</p>
+
+          <div class="plan-box">
+            <div>
+              <p class="pb-name">Plan Pro <span class="pb-tag">Activo</span></p>
+              <p class="pb-desc">Se renueva el 5 de octubre de 2026</p>
+            </div>
+            <div class="pb-price">
+              <p class="amt">$ 199</p>
+              <p class="per">/ mes</p>
+            </div>
+          </div>
+
+          <div class="field" style="max-width:280px;">
+            <label for="plan-select">Cambiar de plan</label>
+            <select id="plan-select">
+              <option>Gratis</option>
+              <option selected>Pro — $ 199/mes</option>
+              <option>Familiar — $ 299/mes</option>
+            </select>
+          </div>
+
+          <p class="hint" style="margin-bottom:10px;font-weight:600;color:var(--ink);">Método de pago</p>
+          <div class="pay-method">
+            <div class="pm-left">
+              <div class="pm-card">VISA</div>
+              <div>
+                <p class="pm-num">···· 1796</p>
+                <p class="pm-exp">Vence 08/29</p>
+              </div>
+            </div>
+            <button type="button" class="pill soft sm">Cambiar tarjeta</button>
+          </div>
+
+          <p class="hint" style="margin-bottom:10px;font-weight:600;color:var(--ink);">Facturas</p>
+          <div class="invoices">
+            <div class="inv-row">
+              <span class="inv-date">05 sep 2026</span>
+              <span class="inv-amt">$ 199</span>
+              <span class="inv-status">Pagada</span>
+              <a class="inv-dl" href="#">Descargar</a>
+            </div>
+            <div class="inv-row">
+              <span class="inv-date">05 ago 2026</span>
+              <span class="inv-amt">$ 199</span>
+              <span class="inv-status">Pagada</span>
+              <a class="inv-dl" href="#">Descargar</a>
+            </div>
+            <div class="inv-row">
+              <span class="inv-date">05 jul 2026</span>
+              <span class="inv-amt">$ 199</span>
+              <span class="inv-status">Pagada</span>
+              <a class="inv-dl" href="#">Descargar</a>
+            </div>
+          </div>
+          <p style="text-align:right;margin:-8px 0 22px;"><a href="facturacion.html" class="link" style="color:var(--bg-deep);font-size:12px;font-weight:600;">Ver historial completo →</a></p>
+
+          <div class="actions-row">
+            <button type="button" class="pill">Guardar cambio de plan</button>
+            <button type="button" class="pill ghost" style="border-color:var(--red);color:var(--red);">Cancelar suscripción</button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+document.getElementById('notifBtn').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  document.getElementById('notifDropdown').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const dd = document.getElementById('notifDropdown');
+  if(dd.classList.contains('open') && !dd.contains(e.target)) dd.classList.remove('open');
+});
+</script>
+</body>
+</html>

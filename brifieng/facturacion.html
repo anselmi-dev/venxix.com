@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Facturación · Cuotas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .sub{color:var(--muted);font-size:14px;margin:0 0 28px;max-width:52ch;line-height:1.5;}
+
+  .plan-box{background:var(--ink);color:#fff;border-radius:var(--radius-md);padding:24px 26px;display:flex;
+           justify-content:space-between;align-items:center;margin-bottom:32px;flex-wrap:wrap;gap:16px;}
+  .plan-box .pb-name{font-family:var(--font-head);font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px;}
+  .plan-box .pb-tag{background:var(--bg);color:var(--ink);font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;}
+  .plan-box .pb-desc{font-size:12px;color:#b9b9b9;margin-top:4px;}
+  .plan-box .pb-right{display:flex;align-items:center;gap:16px;}
+  .plan-box .pb-price{text-align:right;}
+  .plan-box .pb-price .amt{font-family:var(--font-head);font-size:20px;font-weight:700;}
+  .plan-box .pb-price .per{font-size:11px;color:#b9b9b9;}
+
+  .stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:36px;}
+  @media (max-width:560px){ .stats3{grid-template-columns:1fr;} }
+
+  .sect-head{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 14px;}
+  .sect-head h2{font-size:19px;font-weight:600;}
+
+  .pay-method{display:flex;justify-content:space-between;align-items:center;background:var(--surface2);
+             border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 18px;margin-bottom:32px;}
+  .pay-method .pm-left{display:flex;align-items:center;gap:14px;}
+  .pay-method .pm-card{width:44px;height:30px;border-radius:6px;background:#fff;border:1px solid var(--border);
+                       display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--muted);}
+  .pay-method .pm-num{font-size:14px;font-weight:600;}
+  .pay-method .pm-exp{font-size:12px;color:var(--muted);}
+
+  .invoices{border:1px solid var(--border);border-radius:var(--radius-md);overflow:hidden;margin-bottom:12px;}
+  .inv-head-row{display:flex;padding:12px 18px;font-size:11px;color:var(--muted);font-weight:600;
+               text-transform:uppercase;letter-spacing:.03em;background:var(--surface2);}
+  .inv-row{display:flex;align-items:center;padding:14px 18px;font-size:13px;border-top:1px solid var(--border);background:#fff;}
+  .inv-col-date{width:30%;}
+  .inv-col-desc{width:32%;color:var(--muted);}
+  .inv-col-amt{width:16%;font-family:var(--font-head);font-weight:600;}
+  .inv-col-status{width:14%;}
+  .inv-col-dl{width:8%;text-align:right;}
+  .inv-status-pill{font-size:11px;font-weight:600;color:var(--green);background:#e7f5ee;padding:3px 10px;border-radius:20px;}
+  .inv-dl{color:var(--muted);font-size:12px;}
+  .inv-dl:hover{color:var(--ink);}
+
+  @media (max-width:640px){
+    .inv-head-row{display:none;}
+    .inv-row{flex-wrap:wrap;gap:4px 14px;}
+    .inv-col-date,.inv-col-desc,.inv-col-amt,.inv-col-status,.inv-col-dl{width:auto;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell">
+
+    <nav class="topnav">
+      <div class="logo"><span class="dot"></span>Cuotas</div>
+      <div class="nav-links">
+        <a href="tarjetas.html">Panel</a>
+        <a href="cuotas.html">Resumen</a>
+        <a href="perfil.html">Perfil</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="notif-bell">
+          <button type="button" id="notifBtn">🔔<span class="bell-dot"></span></button>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="nd-head"><h4>Notificaciones</h4><a href="#">Marcar todas como leídas</a></div>
+            <div class="nd-list">
+              <div class="notif-item unread">
+                <span class="ni-icon">📅</span>
+                <div class="ni-body">
+                  <p class="ni-title">Vence en 2 días</p>
+                  <p class="ni-desc">Fotostanisic — cuota 5/10, $ 3.936</p>
+                  <p class="ni-time">Hace 3 horas</p>
+                </div>
+                <span class="ni-unread-dot"></span>
+              </div>
+              <div class="notif-item unread">
+                <span class="ni-icon">💳</span>
+                <div class="ni-body">
+                  <p class="ni-title">Vence mañana</p>
+                  <p class="ni-desc">Xiaomi Uruguay — cuota 11/12, U$ 55,75</p>
+                  <p class="ni-time">Ayer</p>
+                </div>
+                <span class="ni-unread-dot"></span>
+              </div>
+              <div class="notif-item">
+                <span class="ni-icon">✅</span>
+                <div class="ni-body">
+                  <p class="ni-title">Tu suscripción se renovó</p>
+                  <p class="ni-desc">Plan Pro — $ 199</p>
+                  <p class="ni-time">5 sep</p>
+                </div>
+              </div>
+            </div>
+            <div class="nd-foot"><a href="notificaciones.html">Ver todas las notificaciones →</a></div>
+          </div>
+        </div>
+        <a href="perfil.html"><div class="avatar" style="width:36px;height:36px;">B</div></a>
+      </div>
+    </nav>
+
+    <a class="back-link" href="perfil.html">← Volver al perfil</a>
+
+    <p class="eyebrow">Cuenta</p>
+    <h1 style="font-size:30px;margin-bottom:6px;">Facturación</h1>
+    <p class="sub">Tu plan, método de pago y el historial completo de facturas.</p>
+
+    <div class="plan-box">
+      <div>
+        <p class="pb-name">Plan Pro <span class="pb-tag">Activo</span></p>
+        <p class="pb-desc">Se renueva el 5 de octubre de 2026</p>
+      </div>
+      <div class="pb-right">
+        <div class="pb-price"><p class="amt">$ 199</p><p class="per">/ mes</p></div>
+        <a href="pricing.html"><button type="button" class="pill ghost sm" style="border-color:#fff;color:#fff;">Cambiar plan</button></a>
+      </div>
+    </div>
+
+    <div class="stats3">
+      <div class="stat"><p class="lbl">Próximo cobro</p><p class="val">$ 199</p><p class="sub2">5 oct 2026</p></div>
+      <div class="stat"><p class="lbl">Pagado este año</p><p class="val">$ 1.194</p><p class="sub2">6 pagos</p></div>
+      <div class="stat"><p class="lbl">Cliente desde</p><p class="val">Abr 2026</p><p class="sub2">5 meses</p></div>
+    </div>
+
+    <div class="sect-head"><h2>Método de pago</h2></div>
+    <div class="pay-method">
+      <div class="pm-left">
+        <div class="pm-card">VISA</div>
+        <div>
+          <p class="pm-num">···· 1796</p>
+          <p class="pm-exp">Vence 08/29</p>
+        </div>
+      </div>
+      <button type="button" class="pill soft sm">Cambiar tarjeta</button>
+    </div>
+
+    <div class="sect-head"><h2>Historial de facturas</h2><span style="font-size:12px;color:var(--muted);">6 facturas</span></div>
+    <div class="invoices">
+      <div class="inv-head-row">
+        <span class="inv-col-date">Fecha</span>
+        <span class="inv-col-desc">Descripción</span>
+        <span class="inv-col-amt">Monto</span>
+        <span class="inv-col-status">Estado</span>
+        <span class="inv-col-dl"></span>
+      </div>
+      <div class="inv-row">
+        <span class="inv-col-date">05 sep 2026</span>
+        <span class="inv-col-desc">Plan Pro — mensual</span>
+        <span class="inv-col-amt">$ 199</span>
+        <span class="inv-col-status"><span class="inv-status-pill">Pagada</span></span>
+        <span class="inv-col-dl"><a class="inv-dl" href="#">↓</a></span>
+      </div>
+      <div class="inv-row">
+        <span class="inv-col-date">05 ago 2026</span>
+        <span class="inv-col-desc">Plan Pro — mensual</span>
+        <span class="inv-col-amt">$ 199</span>
+        <span class="inv-col-status"><span class="inv-status-pill">Pagada</span></span>
+        <span class="inv-col-dl"><a class="inv-dl" href="#">↓</a></span>
+      </div>
+      <div class="inv-row">
+        <span class="inv-col-date">05 jul 2026</span>
+        <span class="inv-col-desc">Plan Pro — mensual</span>
+        <span class="inv-col-amt">$ 199</span>
+        <span class="inv-col-status"><span class="inv-status-pill">Pagada</span></span>
+        <span class="inv-col-dl"><a class="inv-dl" href="#">↓</a></span>
+      </div>
+      <div class="inv-row">
+        <span class="inv-col-date">05 jun 2026</span>
+        <span class="inv-col-desc">Plan Pro — mensual</span>
+        <span class="inv-col-amt">$ 199</span>
+        <span class="inv-col-status"><span class="inv-status-pill">Pagada</span></span>
+        <span class="inv-col-dl"><a class="inv-dl" href="#">↓</a></span>
+      </div>
+      <div class="inv-row">
+        <span class="inv-col-date">05 may 2026</span>
+        <span class="inv-col-desc">Plan Pro — mensual</span>
+        <span class="inv-col-amt">$ 199</span>
+        <span class="inv-col-status"><span class="inv-status-pill">Pagada</span></span>
+        <span class="inv-col-dl"><a class="inv-dl" href="#">↓</a></span>
+      </div>
+      <div class="inv-row">
+        <span class="inv-col-date">05 abr 2026</span>
+        <span class="inv-col-desc">Plan Pro — primer mes</span>
+        <span class="inv-col-amt">$ 199</span>
+        <span class="inv-col-status"><span class="inv-status-pill">Pagada</span></span>
+        <span class="inv-col-dl"><a class="inv-dl" href="#">↓</a></span>
+      </div>
+    </div>
+
+  </div>
+</div>
+<script>
+document.getElementById('notifBtn').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  document.getElementById('notifDropdown').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const dd = document.getElementById('notifDropdown');
+  if(dd.classList.contains('open') && !dd.contains(e.target)) dd.classList.remove('open');
+});
+</script>
+</body>
+</html>

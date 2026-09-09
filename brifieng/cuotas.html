@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuotas pendientes · Tarjeta ····1796</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px;}
+  @media (max-width:560px){ .stats3{grid-template-columns:1fr;} }
+
+  .chart{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:20px 20px 8px;margin-bottom:8px;}
+  .row{display:flex;align-items:center;gap:10px;margin:10px 0;}
+  .row .lab{width:82px;font-size:13px;color:var(--muted);flex-shrink:0;}
+  .row .track{flex:1;background:#fff;border:1px solid var(--border);border-radius:4px;height:14px;overflow:hidden;}
+  .row .fill{height:100%;background:var(--bg-deep);border-radius:4px;}
+  .row .amt{font-family:var(--font-head);font-size:13px;width:82px;text-align:right;flex-shrink:0;font-weight:600;}
+  .note{font-size:12px;color:var(--muted);margin:0 0 32px;}
+
+  .month{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 20px;margin-bottom:12px;}
+  .month h2{font-size:18px;font-weight:600;}
+  .mhead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+  .mhead span{font-size:12px;color:var(--muted);}
+  .item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-top:1px solid var(--border);}
+  .item:first-child{border-top:none;}
+  .item .name{font-size:14px;}
+  .dots{margin-top:3px;}
+  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:3px;background:var(--border);}
+  .dot.paid{background:var(--muted);}
+  .dot.cur.uyu{background:var(--bg-deep);}
+  .dot.cur.usd{background:var(--blue);}
+  .item .val{font-family:var(--font-head);font-size:14px;font-weight:600;}
+  .empty{font-size:13px;color:var(--muted);}
+
+  .disclaimer{background:var(--surface2);border-left:3px solid var(--red);border-radius:var(--radius-sm);
+             padding:14px 18px;margin-top:24px;font-size:13px;color:var(--muted);line-height:1.5;}
+  .disclaimer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell">
+
+    <nav class="topnav">
+      <div class="logo"><span class="dot"></span>Cuotas</div>
+      <div class="nav-links">
+        <a href="tarjetas.html">Panel</a>
+        <a href="cuotas.html" class="active">Resumen</a>
+        <a href="perfil.html">Perfil</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="notif-bell">
+          <button type="button" id="notifBtn">🔔<span class="bell-dot"></span></button>
+          <div class="notif-dropdown" id="notifDropdown">
+            <div class="nd-head"><h4>Notificaciones</h4><a href="#">Marcar todas como leídas</a></div>
+            <div class="nd-list">
+              <div class="notif-item unread">
+                <span class="ni-icon">📅</span>
+                <div class="ni-body">
+                  <p class="ni-title">Vence en 2 días</p>
+                  <p class="ni-desc">Fotostanisic — cuota 5/10, $ 3.936</p>
+                  <p class="ni-time">Hace 3 horas</p>
+                </div>
+                <span class="ni-unread-dot"></span>
+              </div>
+              <div class="notif-item unread">
+                <span class="ni-icon">💳</span>
+                <div class="ni-body">
+                  <p class="ni-title">Vence mañana</p>
+                  <p class="ni-desc">Xiaomi Uruguay — cuota 11/12, U$ 55,75</p>
+                  <p class="ni-time">Ayer</p>
+                </div>
+                <span class="ni-unread-dot"></span>
+              </div>
+              <div class="notif-item">
+                <span class="ni-icon">✅</span>
+                <div class="ni-body">
+                  <p class="ni-title">Tu suscripción se renovó</p>
+                  <p class="ni-desc">Plan Pro — $ 199</p>
+                  <p class="ni-time">5 sep</p>
+                </div>
+              </div>
+            </div>
+            <div class="nd-foot"><a href="notificaciones.html">Ver todas las notificaciones →</a></div>
+          </div>
+        </div>
+        <div class="avatar" style="width:36px;height:36px;">B</div>
+      </div>
+    </nav>
+
+    <a class="back-link" href="tarjetas.html">← Volver al panel</a>
+
+    <p class="eyebrow">Tarjeta ····1796</p>
+    <h1 style="font-size:30px;margin-bottom:24px;">Cuotas pendientes</h1>
+
+    <div class="stats3">
+      <div class="stat"><p class="lbl">Pendiente en UYU</p><p class="val">$ 30.093</p></div>
+      <div class="stat"><p class="lbl">Pendiente en USD</p><p class="val">U$ 112</p></div>
+      <div class="stat"><p class="lbl">Libre de cuotas</p><p class="val">Marzo 2027</p></div>
+    </div>
+
+    <div class="chart" id="chart"></div>
+    <p class="note">Además, U$ 30 por mes en suscripciones sin cuotas (Anthropic Claude U$ 20 + Lemsqzy Laragon U$ 10), mientras se mantengan activas.</p>
+
+    <div id="months"></div>
+
+    <div class="disclaimer">
+      <strong>Cómo se armó esta proyección.</strong> El estado de cuenta es un historial de movimientos, no un resumen mensual: cada compra en cuotas aparece solo en la fecha en que se generó esa cuota puntual, así que algunas cuotas intermedias se estimaron por cadencia mensual regular. La cuota final de Zooko (6/6, prevista para junio 2026) no aparece en el listado — lo más probable es que ya esté saldada. Confirmá fechas exactas en la app del banco.
+    </div>
+  </div>
+</div>
+
+<script>
+const data = [
+ {m:"Septiembre 2026",items:[
+  ["San Roque","UYU",759.50,2,2],
+  ["Decathlon Pta Carret","UYU",928.33,2,3],
+  ["Merpago*Agfotografia","UYU",1100.00,4,5],
+  ["Merpago*Fotostanisic","UYU",3936.00,5,10],
+  ["Xiaomi Uruguay","USD",55.75,11,12]
+ ]},
+ {m:"Octubre 2026",items:[
+  ["Wikimusculos Tres Cr","UYU",1660.50,2,2],
+  ["Decathlon Pta Carret","UYU",928.33,3,3],
+  ["Merpago*Agfotografia","UYU",1100.00,5,5],
+  ["Merpago*Fotostanisic","UYU",3936.00,6,10],
+  ["Xiaomi Uruguay","USD",55.75,12,12]
+ ]},
+ {m:"Noviembre 2026",items:[ ["Merpago*Fotostanisic","UYU",3936.00,7,10] ]},
+ {m:"Diciembre 2026",items:[ ["Merpago*Fotostanisic","UYU",3936.00,8,10] ]},
+ {m:"Enero 2027",items:[ ["Merpago*Fotostanisic","UYU",3936.00,9,10] ]},
+ {m:"Febrero 2027",items:[ ["Merpago*Fotostanisic","UYU",3936.00,10,10] ]},
+ {m:"Marzo 2027",items:[]}
+];
+
+const uyuTotals = data.map(d => d.items.filter(i=>i[1]==='UYU').reduce((s,i)=>s+i[2],0));
+const maxUyu = Math.max(...uyuTotals);
+const chart = document.getElementById('chart');
+data.forEach((d,i)=>{
+  const total = uyuTotals[i];
+  const pct = maxUyu ? (total/maxUyu*100) : 0;
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.innerHTML = '<span class="lab">'+d.m.split(' ')[0]+'</span><div class="track"><div class="fill" style="width:'+pct+'%"></div></div><span class="amt">$ '+total.toLocaleString('es-UY',{minimumFractionDigits:0})+'</span>';
+  chart.appendChild(row);
+});
+
+const box = document.getElementById('months');
+data.forEach(d=>{
+  const total = d.items.length;
+  const card = document.createElement('div');
+  card.className = 'month';
+  let rows = d.items.map(([name,cur,amt,cuota,tot])=>{
+    let dots='';
+    for(let i=1;i<=tot;i++){
+      let cls='dot';
+      if(i<cuota) cls+=' paid';
+      if(i===cuota) cls+= cur==='UYU' ? ' cur uyu' : ' cur usd';
+      dots += '<span class="'+cls+'"></span>';
+    }
+    const val = cur==='UYU' ? ('$ '+amt.toLocaleString('es-UY',{minimumFractionDigits:2})) : ('U$ '+amt.toLocaleString('es-UY',{minimumFractionDigits:2}));
+    return '<div class="item"><div><p class="name">'+name+' <span style="color:var(--muted);font-size:12px;">('+cuota+'/'+tot+')</span></p><div class="dots">'+dots+'</div></div><span class="val">'+val+'</span></div>';
+  }).join('');
+  card.innerHTML = '<div class="mhead"><h2>'+d.m+'</h2><span>'+total+' cuota'+(total===1?'':'s')+' activa'+(total===1?'':'s')+'</span></div>'+
+    (rows || '<p class="empty">Sin cuotas pendientes.</p>');
+  box.appendChild(card);
+});
+
+document.getElementById('notifBtn').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  document.getElementById('notifDropdown').classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  const dd = document.getElementById('notifDropdown');
+  if(dd.classList.contains('open') && !dd.contains(e.target)) dd.classList.remove('open');
+});
+</script>
+</body>
+</html>

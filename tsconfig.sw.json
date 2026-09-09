@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ESNext", "WebWorker"],
+        "types": [],
+        "skipLibCheck": true,
+        "noEmit": true
+    },
+    "include": ["resources/js/sw.ts"]
+}

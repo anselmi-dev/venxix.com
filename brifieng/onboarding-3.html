@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elegí tu moneda · Cuotas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .page{display:flex;align-items:center;justify-content:center;}
+  .steps{display:flex;gap:6px;margin-bottom:26px;}
+  .steps i{width:26px;height:4px;border-radius:4px;background:var(--border);display:block;}
+  .steps i.on{background:var(--bg-deep);}
+  h1{font-size:24px;margin:0 0 8px;}
+  .sub{color:var(--muted);font-size:14px;line-height:1.5;margin-bottom:26px;}
+
+  .curr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;}
+  .curr-card{position:relative;}
+  .curr-card input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0;}
+  .curr-card .box{border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px;background:var(--surface2);
+                  display:flex;flex-direction:column;gap:4px;}
+  .curr-card input:checked + .box{border-color:var(--bg-deep);background:#fef8e0;}
+  .curr-card .sym{font-family:var(--font-head);font-size:20px;font-weight:700;}
+  .curr-card .name{font-size:13px;}
+  .curr-card .code{font-size:11px;color:var(--muted);}
+
+  .toggle-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--border);margin-bottom:26px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="shell narrow">
+    <div class="steps"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+
+    <p class="eyebrow">Paso 3 de 3</p>
+    <h1>¿En qué moneda pensás?</h1>
+    <p class="sub">Vas a poder cambiarlo cuando quieras desde tu perfil.</p>
+
+    <div class="curr-grid">
+      <label class="curr-card">
+        <input type="radio" name="moneda" checked>
+        <div class="box"><span class="sym">$</span><span class="name">Peso uruguayo</span><span class="code">UYU</span></div>
+      </label>
+      <label class="curr-card">
+        <input type="radio" name="moneda">
+        <div class="box"><span class="sym">U$</span><span class="name">Dólar</span><span class="code">USD</span></div>
+      </label>
+    </div>
+
+    <div class="toggle-row">
+      <div>
+        <p style="font-size:14px;font-weight:500;">Mostrar ambas monedas</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:2px;">Ver UYU y USD juntos en tarjetas y resúmenes.</p>
+      </div>
+      <label class="switch"><input type="checkbox" checked><span class="track"><span class="knob"></span></span></label>
+    </div>
+
+    <a href="tarjetas.html"><button type="button" class="pill block">Ir a mi panel →</button></a>
+  </div>
+</div>
+</body>
+</html>
