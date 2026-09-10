@@ -10,7 +10,9 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 use Revoltify\Subscriptionify\Models\Plan;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckoutController extends Controller
 {
@@ -19,7 +21,7 @@ class CheckoutController extends Controller
         private PaymentGatewayManager $gateways,
     ) {}
 
-    public function store(Request $request, string $plan): RedirectResponse
+    public function store(Request $request, string $plan): RedirectResponse|Response
     {
         $validated = $request->validate([
             'interval' => ['required', Rule::in(['monthly', 'yearly'])],
@@ -51,7 +53,12 @@ class CheckoutController extends Controller
             $user->forceFill(['billing_provider' => $provider])->save();
         }
 
-        return redirect()->away($checkoutUrl);
+        // Checkout URLs point to another origin (Stripe/dLocal Go hosted
+        // checkout, Mercado Pago's init_point). Inertia's <Form> submits via
+        // XHR, and a plain redirect there gets the browser to try following
+        // it as another XHR request — which CORS then blocks. Inertia::location
+        // forces a real browser navigation instead.
+        return Inertia::location($checkoutUrl);
     }
 
     public function cancel(Request $request): RedirectResponse

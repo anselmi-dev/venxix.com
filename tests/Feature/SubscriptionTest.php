@@ -41,6 +41,25 @@ test('fake checkout activates the pro plan', function () {
     expect(AuditLog::where('user_id', $user->id)->where('action', 'plan_changed')->exists())->toBeTrue();
 });
 
+test('checkout sends Inertia XHR requests to the gateway via a full page visit', function () {
+    // Regression test: a plain redirect to an external checkout URL (Stripe,
+    // dLocal Go, Mercado Pago) gets followed as another XHR request by
+    // Inertia's <Form>, which the browser then blocks on CORS. Inertia
+    // needs a 409 + X-Inertia-Location instead, so it does a real
+    // window.location visit.
+    $user = User::factory()->create();
+
+    $response = $this->actingAs($user)
+        ->withHeaders(['X-Inertia' => 'true'])
+        ->post(route('checkout.store', ['plan' => 'pro']), [
+            'interval' => 'monthly',
+            'gateway' => 'stripe',
+        ]);
+
+    $response->assertStatus(409);
+    expect($response->headers->get('X-Inertia-Location'))->toBe(route('billing', ['checkout' => 'success']));
+});
+
 test('switching to the free plan from checkout updates the subscription', function () {
     $user = User::factory()->pro()->create();
 

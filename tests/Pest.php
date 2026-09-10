@@ -20,6 +20,31 @@ pest()->extend(TestCase::class)
 
 /*
 |--------------------------------------------------------------------------
+| Gateway credential isolation
+|--------------------------------------------------------------------------
+|
+| Real gateway credentials in the developer's own .env (e.g. after running
+| `dlocalgo:sync-plans`) would otherwise leak into the test environment,
+| and a credential a test sets via config() isn't reset between tests the
+| way the database is either — either way a test could see a gateway as
+| "configured" when it didn't ask for that. Force a clean slate before
+| every test; tests that need a gateway "configured" set it explicitly.
+|
+*/
+
+beforeEach(function (): void {
+    config([
+        'services.stripe.secret' => null,
+        'services.stripe.webhook_secret' => null,
+        'services.mercadopago.access_token' => null,
+        'services.mercadopago.webhook_secret' => null,
+        'services.dlocalgo.api_key' => null,
+        'services.dlocalgo.secret_key' => null,
+    ]);
+});
+
+/*
+|--------------------------------------------------------------------------
 | Expectations
 |--------------------------------------------------------------------------
 |
