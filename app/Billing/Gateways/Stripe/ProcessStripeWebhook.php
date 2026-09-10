@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Billing\Gateways\Stripe;
 
 use App\Billing\ActivatePaidPlan;
 use App\Billing\PaymentGatewayManager;
-use App\Billing\StripeGateway;
 use App\Models\Invoice;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Contracts;
+namespace App\Billing\Contracts;
 
 use App\Models\User;
 use Revoltify\Subscriptionify\Models\Plan;

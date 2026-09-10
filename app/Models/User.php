@@ -40,6 +40,8 @@ use Revoltify\Subscriptionify\Models\Contracts\HasSubscription;
  * @property string|null $stripe_subscription_id
  * @property string|null $billing_provider
  * @property string|null $mercadopago_subscription_id
+ * @property string|null $dlocalgo_subscription_id
+ * @property string|null $dlocalgo_plan_id
  * @property string|null $pm_brand
  * @property string|null $pm_last_four
  * @property int|null $pm_exp_month
@@ -51,7 +53,7 @@ use Revoltify\Subscriptionify\Models\Contracts\HasSubscription;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'locale', 'password', 'google_id', 'is_admin', 'preferred_currency', 'show_both_currencies', 'reminders_enabled', 'usd_uyu_rate', 'onboarding_completed_at', 'stripe_id', 'stripe_subscription_id', 'billing_provider', 'mercadopago_subscription_id', 'pm_brand', 'pm_last_four', 'pm_exp_month', 'pm_exp_year'])]
+#[Fillable(['name', 'email', 'locale', 'password', 'google_id', 'is_admin', 'preferred_currency', 'show_both_currencies', 'reminders_enabled', 'usd_uyu_rate', 'onboarding_completed_at', 'stripe_id', 'stripe_subscription_id', 'billing_provider', 'mercadopago_subscription_id', 'dlocalgo_subscription_id', 'dlocalgo_plan_id', 'pm_brand', 'pm_last_four', 'pm_exp_month', 'pm_exp_year'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements FilamentUser, HasLocalePreference, PasskeyUser, Subscribable
 {

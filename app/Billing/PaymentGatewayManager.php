@@ -2,7 +2,11 @@
 
 namespace App\Billing;
 
-use App\Contracts\PaymentGateway;
+use App\Billing\Contracts\PaymentGateway;
+use App\Billing\Gateways\DlocalGo\DlocalGoGateway;
+use App\Billing\Gateways\Fake\FakePaymentGateway;
+use App\Billing\Gateways\MercadoPago\MercadoPagoGateway;
+use App\Billing\Gateways\Stripe\StripeGateway;
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
 use LogicException;
@@ -27,6 +31,11 @@ class PaymentGatewayManager
                 'services.mercadopago.access_token',
                 MercadoPagoGateway::class,
                 'Mercado Pago',
+            ),
+            'dlocalgo' => $this->configured(
+                'services.dlocalgo.api_key',
+                DlocalGoGateway::class,
+                'dLocal Go',
             ),
             default => throw new InvalidArgumentException('Gateway de pago no soportado.'),
         };

@@ -1,6 +1,6 @@
 <?php
 
-use App\Billing\StripeGateway;
+use App\Billing\Gateways\Stripe\StripeGateway;
 use App\Models\User;
 
 test('sync payment method does nothing for a user without a stripe customer id', function () {

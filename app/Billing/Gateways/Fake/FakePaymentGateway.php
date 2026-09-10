@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Billing;
+namespace App\Billing\Gateways\Fake;
 
-use App\Contracts\PaymentGateway;
+use App\Billing\ActivatePaidPlan;
+use App\Billing\Contracts\PaymentGateway;
 use App\Models\User;
 use Revoltify\Subscriptionify\Models\Plan;
 

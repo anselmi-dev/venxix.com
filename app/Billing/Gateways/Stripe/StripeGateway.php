@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Billing;
+namespace App\Billing\Gateways\Stripe;
 
-use App\Contracts\PaymentGateway;
-use App\Jobs\ProcessStripeWebhook;
+use App\Billing\Contracts\PaymentGateway;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Revoltify\Subscriptionify\Models\Plan;

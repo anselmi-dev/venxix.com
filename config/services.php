@@ -46,6 +46,18 @@ return [
         'webhook_secret' => env('MERCADOPAGO_WEBHOOK_SECRET'),
     ],
 
+    'dlocalgo' => [
+        'api_key' => env('DLOCALGO_API_KEY'),
+        'secret_key' => env('DLOCALGO_SECRET_KEY'),
+        'sandbox' => (bool) env('DLOCALGO_SANDBOX', true),
+        'plan_tokens' => [
+            'pro' => env('DLOCALGO_PLAN_TOKEN_PRO'),
+            'pro-yearly' => env('DLOCALGO_PLAN_TOKEN_PRO_YEARLY'),
+            'familiar' => env('DLOCALGO_PLAN_TOKEN_FAMILIAR'),
+            'familiar-yearly' => env('DLOCALGO_PLAN_TOKEN_FAMILIAR_YEARLY'),
+        ],
+    ],
+
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),

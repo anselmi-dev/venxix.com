@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'stripe/webhook',
             'mercadopago/webhook',
+            'dlocalgo/webhook',
         ]);
 
         $middleware->web(append: [

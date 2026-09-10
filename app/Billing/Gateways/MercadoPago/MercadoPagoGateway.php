@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Billing;
+namespace App\Billing\Gateways\MercadoPago;
 
-use App\Contracts\PaymentGateway;
+use App\Billing\Contracts\PaymentGateway;
 use App\Models\User;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;

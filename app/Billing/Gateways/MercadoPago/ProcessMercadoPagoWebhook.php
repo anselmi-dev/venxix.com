@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Billing\Gateways\MercadoPago;
 
 use App\Billing\ActivatePaidPlan;
 use App\Models\Invoice;

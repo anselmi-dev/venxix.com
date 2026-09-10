@@ -14,7 +14,8 @@ class PricingController extends Controller
     {
         $user = $request->user();
         $hasConfiguredGateway = filled(config('services.stripe.secret'))
-            || filled(config('services.mercadopago.access_token'));
+            || filled(config('services.mercadopago.access_token'))
+            || filled(config('services.dlocalgo.api_key'));
         $showUnconfiguredGateways = app()->environment(['local', 'testing'])
             && ! $hasConfiguredGateway;
         $gateways = collect([
@@ -27,6 +28,11 @@ class PricingController extends Controller
                 'slug' => 'mercadopago',
                 'name' => __('ui.pricing.gateway_mercadopago'),
                 'configured' => filled(config('services.mercadopago.access_token')),
+            ],
+            'dlocalgo' => [
+                'slug' => 'dlocalgo',
+                'name' => __('ui.pricing.gateway_dlocalgo'),
+                'configured' => filled(config('services.dlocalgo.api_key')),
             ],
         ])->filter(fn (array $gateway) => $showUnconfiguredGateways || $gateway['configured'])->values();
 

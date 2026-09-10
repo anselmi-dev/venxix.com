@@ -1,5 +1,8 @@
 <?php
 
+use App\Billing\Gateways\DlocalGo\DlocalGoWebhookController;
+use App\Billing\Gateways\MercadoPago\MercadoPagoWebhookController;
+use App\Billing\Gateways\Stripe\StripeWebhookController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\BillingController;
 use App\Http\Controllers\CardController;
@@ -9,7 +12,6 @@ use App\Http\Controllers\InstallmentController;
 use App\Http\Controllers\InstallmentExportController;
 use App\Http\Controllers\LegalController;
 use App\Http\Controllers\LocaleController;
-use App\Http\Controllers\MercadoPagoWebhookController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OnboardingController;
@@ -19,13 +21,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PushSubscriptionController;
 use App\Http\Controllers\StatementImportController;
-use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\SummaryController;
 use App\Http\Middleware\EnsureOnboardingIsComplete;
 use Illuminate\Support\Facades\Route;
 
 Route::post('stripe/webhook', StripeWebhookController::class)->name('stripe.webhook');
 Route::post('mercadopago/webhook', MercadoPagoWebhookController::class)->name('mercadopago.webhook');
+Route::post('dlocalgo/webhook', DlocalGoWebhookController::class)->name('dlocalgo.webhook');
 
 Route::inertia('/', 'Landing')->name('home');
 Route::post('locale', LocaleController::class)

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Billing\ActivatePaidPlan;
-use App\Billing\FakePaymentGateway;
+use App\Billing\Gateways\Fake\FakePaymentGateway;
 use App\Billing\PaymentGatewayManager;
 use App\Models\AuditLog;
 use Illuminate\Http\RedirectResponse;
@@ -23,7 +23,7 @@ class CheckoutController extends Controller
     {
         $validated = $request->validate([
             'interval' => ['required', Rule::in(['monthly', 'yearly'])],
-            'gateway' => ['required', Rule::in(['stripe', 'mercadopago'])],
+            'gateway' => ['required', Rule::in(['stripe', 'mercadopago', 'dlocalgo'])],
         ]);
 
         abort_unless(in_array($plan, ['free', 'pro', 'familiar'], true), 404);

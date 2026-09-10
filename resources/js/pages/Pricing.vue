@@ -21,18 +21,18 @@ const props = defineProps<{
         familiar: { monthly: number; yearly: number };
     };
     paymentGateways: {
-        slug: 'stripe' | 'mercadopago';
+        slug: 'stripe' | 'mercadopago' | 'dlocalgo';
         name: string;
         configured: boolean;
     }[];
-    defaultGateway: 'stripe' | 'mercadopago';
+    defaultGateway: 'stripe' | 'mercadopago' | 'dlocalgo';
 }>();
 
 const page = usePage();
 const { t } = useTrans();
 
 const yearly = ref(false);
-const paymentGateway = ref<'stripe' | 'mercadopago'>(
+const paymentGateway = ref<'stripe' | 'mercadopago' | 'dlocalgo'>(
     props.paymentGateways.some(
         (gateway) => gateway.slug === props.defaultGateway,
     )
@@ -114,12 +114,6 @@ function perLabel(slug: 'free' | 'pro' | 'familiar'): string {
 
     return yearly.value ? t('common.per_year') : t('common.per_month');
 }
-
-function gatewayLabel(slug: 'stripe' | 'mercadopago'): string {
-    return slug === 'stripe'
-        ? t('pricing.gateway_stripe')
-        : t('pricing.gateway_mercadopago');
-}
 </script>
 
 <template>
@@ -188,7 +182,7 @@ function gatewayLabel(slug: 'stripe' | 'mercadopago'): string {
             "
             @click="paymentGateway = gateway.slug"
         >
-            {{ gatewayLabel(gateway.slug) }}
+            {{ gateway.name }}
         </button>
     </div>
 

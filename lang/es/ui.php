@@ -181,6 +181,7 @@ return [
         'pay_with' => 'Pagar con',
         'gateway_stripe' => 'Tarjeta con Stripe',
         'gateway_mercadopago' => 'Mercado Pago',
+        'gateway_dlocalgo' => 'dLocal Go',
         'most_chosen' => 'Más elegido',
         'current_plan' => 'Plan actual',
         'coming_soon' => 'Próximamente',

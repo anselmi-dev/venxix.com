@@ -1,8 +1,8 @@
 <?php
 
 use App\Billing\ActivatePaidPlan;
+use App\Billing\Gateways\Stripe\ProcessStripeWebhook;
 use App\Billing\PaymentGatewayManager;
-use App\Jobs\ProcessStripeWebhook;
 use App\Models\AuditLog;
 use App\Models\Invoice;
 use App\Models\User;

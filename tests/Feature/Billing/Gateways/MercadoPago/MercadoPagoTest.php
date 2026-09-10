@@ -1,8 +1,8 @@
 <?php
 
 use App\Billing\ActivatePaidPlan;
-use App\Billing\MercadoPagoGateway;
-use App\Jobs\ProcessMercadoPagoWebhook;
+use App\Billing\Gateways\MercadoPago\MercadoPagoGateway;
+use App\Billing\Gateways\MercadoPago\ProcessMercadoPagoWebhook;
 use App\Models\User;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Http;

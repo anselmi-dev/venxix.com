@@ -23,3 +23,15 @@ test('pricing page marks authenticated visitors', function () {
             ->where('currentFamily', 'free')
         );
 });
+
+test('pricing page lists dLocal Go alongside the other gateways', function () {
+    $this->get(route('pricing'))
+        ->assertOk()
+        ->assertInertia(fn ($page) => $page
+            ->component('Pricing')
+            ->has('paymentGateways', 3)
+            ->where('paymentGateways.0.slug', 'stripe')
+            ->where('paymentGateways.1.slug', 'mercadopago')
+            ->where('paymentGateways.2.slug', 'dlocalgo')
+        );
+});
